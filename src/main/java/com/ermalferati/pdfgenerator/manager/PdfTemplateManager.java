@@ -37,20 +37,17 @@ public class PdfTemplateManager {
     }
 
     private ITextRenderer buildPdfRenderer(String templateName, Context context) {
-        ITextRenderer renderer = buildBasePdfRenderer(templateName, context);
+        ITextRenderer renderer = new ITextRenderer();
         ResourceLoaderUserAgent callback = new ResourceLoaderUserAgent(renderer.getOutputDevice());
         callback.setSharedContext(renderer.getSharedContext());
         renderer.getSharedContext().setUserAgentCallback(callback);
         renderer.getSharedContext().setReplacedElementFactory(new ImgReplacedElementFactory());
-        return renderer;
 
-    }
-
-    private ITextRenderer buildBasePdfRenderer(String templateName, Context context) {
         String html = processTemplate(templateName, context);
-        ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(html);
+
         return renderer;
+
     }
 
     private String processTemplate(String templateName, Context context) {
